@@ -24,9 +24,11 @@ char  A_char[] = { "00001111" };
 char  B_char[] = { "00110011" };
 char  C_char[] = { "01010101" };
 
+bool array_minus[3] = { false,false,false };
+
 bool check_input_abc(string& _inp)
 {
-	string tmp[]= { "aA","bB","cC" };
+	string tmp[] = { "aA","bB","cC" };
 	int res = 0;
 	for (size_t i = 0; i < 2; i++)
 	{
@@ -104,10 +106,18 @@ void draw(string& _input, const SIGN* _current_sign, int variant)
 
 	for (int i = 0; i<8; ++i)
 	{
-
-		A = A_char[i] - '0';
-		B = B_char[i] - '0';
-		C = C_char[i] - '0';
+		if (array_minus[0])
+			A = !(A_char[i] - '0');
+		else
+			A = (A_char[i] - '0');
+		if (array_minus[1])
+			B = !(B_char[i] - '0');
+		else
+			B = (B_char[i] - '0');
+		if (array_minus[2])
+			C = !(C_char[i] - '0');
+		else
+			C = (C_char[i] - '0');
 
 		if (variant == 1)
 		{
@@ -263,6 +273,50 @@ int main(int argc, const char * argv[]) {
 		cout << "ERROR Symbol";
 		exit(1);
 	}
+	//
+	string tmp(Input);
+	for (int i = 0; i < tmp.size(); ++i)
+	{
+
+		if (tmp[i] == '-')
+		{
+			switch (tmp[i + 1])
+			{
+			case 'a':
+			{
+				array_minus[0] = true;
+				break;
+			}
+			case 'A':
+			{
+				array_minus[0] = true;
+				break;
+			}
+			case 'b':
+			{
+				array_minus[1] = true;
+				break;
+			}
+			case 'B':
+			{
+				array_minus[1] = true;
+				break;
+			}
+			case 'c':
+			{
+				array_minus[2] = true;
+				break;
+			}case 'C':
+			{
+				array_minus[2] = true;
+				break;
+			}
+			default:
+				break;
+			}
+		}
+	}
+	//
 	int variant = check_variant(Input);
 	draw(Input, current_sign, variant);
 	system("pause");
